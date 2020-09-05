@@ -99,7 +99,11 @@ class Source(Base):
         args += ['--no-pager', 'log']
         args += self.vars['default_opts']
         if len(context['__file']):
-            args += ['--', context['__file']]
+            git_file = os.path.relpath(
+                os.path.join(context['__root'], context['__file']),
+                os.path.dirname(context['__gitdir']),
+            )
+            args += ['--', git_file]
 
         self.print_message(context, ' '.join(args))
 
